@@ -1,0 +1,13 @@
+.paginationBullet {
+  background-color: var(--color-watch-white);
+  border: 1px solid var(--color-watch-gray2);
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 100%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.paginationBulletActive {
+  background-color: var(--color-watch-primary);
+  border-color: var(--color-watch-primary);
+}
