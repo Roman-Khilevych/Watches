@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { getUrl } from '@/helpers/urlHelper';
 
 interface BannerProps {
   title: string;
@@ -12,7 +13,13 @@ const Banner: React.FC<BannerProps> = ({ title, subtitle, text, imageUrl }) => {
     <div className="relative bg-watch-primary text-watch-white shadow-watch-line-bottom overflow-hidden min-h-64">
       {imageUrl && (
         <div className="absolute inset-0 z-0">
-          <Image src={imageUrl} alt="" fill priority={true} className="pointer-events-none object-cover object-right" />
+          <Image
+            src={getUrl(imageUrl)}
+            alt=""
+            fill
+            priority={true}
+            className="pointer-events-none object-cover object-right"
+          />
         </div>
       )}
       <div

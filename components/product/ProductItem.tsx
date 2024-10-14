@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ProductModel } from '@/models/product';
 import { BreadcrumbItemModel } from '@/models/breadcrumb';
+import { getUrl } from '@/helpers/urlHelper';
 import StyledLink from '@/components/UI/StyledLink';
 import ProductPrice from '@/components/product/ProductPrice';
 
@@ -27,7 +28,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, currentBreadcrumbTra
       <Link href={productUrl} onClick={handleProductClick}>
         <div className="w-full pt-[100%] relative">
           <Image
-            src={product.images[0]}
+            src={getUrl(product.images[0])}
             alt={product.name}
             priority
             fill

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
+import { getUrl } from '@/helpers/urlHelper';
 import Icon from '@/components/UI/Icon';
 import 'swiper/swiper-bundle.css';
 import styles from './Gallery.module.css';
@@ -34,7 +35,7 @@ const Gallery: React.FC<GalleryProps> = ({ name, images }) => {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <Image src={image} alt={name} width={500} height={500} className="w-full object-cover" />
+            <Image src={getUrl(image)} alt={name} width={500} height={500} className="w-full object-cover" />
           </SwiperSlide>
         ))}
       </Swiper>
