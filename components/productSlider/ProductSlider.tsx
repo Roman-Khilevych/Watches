@@ -1,11 +1,12 @@
 'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y } from 'swiper/modules';
-import { ProductModel } from '@/models/product';
 import ProductItem from '@/components/product/ProductItem';
 import Icon from '@/components/UI/Icon';
 import 'swiper/swiper-bundle.css';
+import { ProductModel } from '@/models/product';
+import { useState } from 'react';
+import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './ProductSlider.module.css';
 
 interface ProductSliderProps {
@@ -15,7 +16,8 @@ interface ProductSliderProps {
 }
 
 const ProductSlider: React.FC<ProductSliderProps> = ({ products, maxProducts = 10, sliderName = '' }) => {
-  sliderName = `${sliderName}-` || '';
+  const [isSwiperReady, setIsSwiperReady] = useState(false);
+  const sliderPrefix = sliderName ? `${sliderName}-` : '';
 
   if (products.length > maxProducts) {
     products = products.slice(0, maxProducts);
@@ -27,15 +29,16 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, maxProducts = 1
         modules={[Navigation, Pagination, A11y]}
         spaceBetween={24}
         speed={300}
+        onSwiper={() => setIsSwiperReady(true)}
         pagination={{
           clickable: true,
-          el: `.${sliderName}slider-pagination`,
+          el: `.${sliderPrefix}slider-pagination`,
           bulletClass: styles.paginationBullet,
           bulletActiveClass: styles.paginationBulletActive,
         }}
         navigation={{
-          nextEl: `.${sliderName}slider-next`,
-          prevEl: `.${sliderName}slider-prev`,
+          nextEl: `.${sliderPrefix}slider-next`,
+          prevEl: `.${sliderPrefix}slider-prev`,
         }}
         loop={true}
         slidesPerGroup={1}
@@ -55,26 +58,30 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ products, maxProducts = 1
         }}
       >
         {products.map((product, index) => (
-          <SwiperSlide key={index}>
-            <ProductItem product={product} />
+          <SwiperSlide key={index} className={styles.swiperSlide}>
+            <ProductItem product={product}/>
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex justify-center mt-8">
-        <div className="flex items-center">
-          <button
-            className={`${sliderName}slider-prev text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2`}
-          >
-            <Icon name="arrow-left" className="w-3" />
-          </button>
-          <div className={`flex space-x-3 ${sliderName}slider-pagination mx-6`}></div>
-          <button
-            className={`${sliderName}slider-next text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2`}
-          >
-            <Icon name="arrow-right" className="w-3" />
-          </button>
+      {products.length > 1 &&
+        <div className="flex justify-center mt-8">
+          <div className="flex items-center">
+            <button
+              disabled={!isSwiperReady}
+              className={`${sliderPrefix}slider-prev text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2 disabled:text-watch-gray2`}
+            >
+              <Icon name="arrow-left" className="w-3"/>
+            </button>
+            <div className={`flex space-x-3 ${sliderPrefix}slider-pagination mx-6`}></div>
+            <button
+              disabled={!isSwiperReady}
+              className={`${sliderPrefix}slider-next text-watch-primary disabled:text-watch-gray2 hover:text-watch-gray2 transition-colors transition-watch p-2`}
+            >
+              <Icon name="arrow-right" className="w-3"/>
+            </button>
+          </div>
         </div>
-      </div>
+      }
     </div>
   );
 };

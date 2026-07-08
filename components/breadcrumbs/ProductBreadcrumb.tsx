@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { findCategoryWithProductTrail } from '@/helpers/breadcrumbHelpers';
 import { BreadcrumbItemModel } from '@/models/breadcrumb';
 import { ProductModel } from '@/models/product';
-import { findCategoryWithProductTrail } from '@/helpers/breadcrumbHelpers';
-import { useProductStore } from '@/stores/productStore';
 import { useCategoryStore } from '@/stores/categoryStore';
+import { useProductStore } from '@/stores/productStore';
+import { useEffect, useState } from 'react';
 import Breadcrumbs from './Breadcrumbs';
 
 interface ProductBreadcrumbProps {
@@ -40,7 +40,7 @@ const ProductBreadcrumb: React.FC<ProductBreadcrumbProps> = ({ productSku, produ
     }
   }, [productSku, products, categories, productName]);
 
-  return breadcrumbTrail ? <Breadcrumbs slugs={breadcrumbTrail} /> : null;
+  return breadcrumbTrail ? <Breadcrumbs slugs={breadcrumbTrail}/> : <Breadcrumbs/>;
 };
 
 export default ProductBreadcrumb;

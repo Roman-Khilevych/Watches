@@ -1,11 +1,11 @@
 'use client';
 
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y } from 'swiper/modules';
-import { getUrl } from '@/helpers/urlHelper';
 import Icon from '@/components/UI/Icon';
 import 'swiper/swiper-bundle.css';
+import { getUrl } from '@/helpers/urlHelper';
+import Image from 'next/image';
+import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './Gallery.module.css';
 
 interface GalleryProps {
@@ -34,19 +34,26 @@ const Gallery: React.FC<GalleryProps> = ({ name, images }) => {
         loop={true}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index}>
-            <Image src={getUrl(image)} alt={name} width={500} height={500} className="w-full object-cover" />
+          <SwiperSlide key={index} className="aspect-square !flex items-center justify-center">
+            <Image src={getUrl(image)} alt={name} width={500} height={500} className="w-full max-h-full object-contain"
+                   priority={index === 0}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex justify-center mt-8">
+
+      <div className={`justify-center mt-8 ${images.length > 1 ? 'flex' : 'hidden'}`}>
         <div className="flex items-center">
-          <button className="gallery-prev text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2">
-            <Icon name="arrow-left" className="w-3" />
+          <button
+            className="gallery-prev text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2"
+          >
+            <Icon name="arrow-left" className="w-3"/>
           </button>
           <div className="flex space-x-3 gallery-pagination mx-6"></div>
-          <button className="gallery-next text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2">
-            <Icon name="arrow-right" className="w-3" />
+          <button
+            className="gallery-next text-watch-primary hover:text-watch-gray2 transition-colors transition-watch p-2"
+          >
+            <Icon name="arrow-right" className="w-3"/>
           </button>
         </div>
       </div>

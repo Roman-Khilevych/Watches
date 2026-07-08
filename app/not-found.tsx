@@ -1,8 +1,28 @@
-export default function NotFound() {
+import Link from 'next/link';
+import ButtonPrimary from '@/components/UI/ButtonPrimary';
+
+const NotFound: React.FC = () => {
   return (
-    <div className="text-center py-20">
-      <h1 className="font-watch-primary text-4xl font-bold mb-4">Page Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
-    </div>
+      <section className="container flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+        <p className="font-watch-secondary text-sm uppercase tracking-[0.3em] text-watch-gray2">
+          Error 404
+        </p>
+
+        <h1 className="mt-4 font-watch-secondary text-3xl font-bold uppercase md:text-4xl">
+          Page not found
+        </h1>
+
+        <p className="mt-4 max-w-md text-watch-gray2">
+          The page you are looking for does not exist or has been moved.
+        </p>
+
+        <div className="mt-8">
+          <Link href="/">
+            <ButtonPrimary>Back to home</ButtonPrimary>
+          </Link>
+        </div>
+      </section>
   );
-}
+};
+
+export default NotFound;

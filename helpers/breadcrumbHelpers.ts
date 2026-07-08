@@ -29,3 +29,9 @@ export const findCategoryWithProductTrail = (
 
   return null;
 };
+
+export const buildBreadcrumbHrefBySlugs = (slugs: BreadcrumbItemModel[], index: number): string => {
+  if (index < 0 || slugs.length <= 0) return '/';
+  
+  return slugs.slice(0, index + 1).map((c) => c.slug).join('/');
+};
